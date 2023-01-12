@@ -13,9 +13,9 @@ class TodoViewModel: ObservableObject {
     @Published var todos = [TodoItem]() // Reference to our Model
     private var databaseReference = Firestore.firestore().collection("todoList-ec71e") // reference to our Firestore's collection
     // function to post data
-    func addData(title: String) {
+    func addData(title: String, dueDate: Date) {
         let createdAt = Date()
-        _ = databaseReference.addDocument(data: ["title": title, "createdAt": createdAt])
+        _ = databaseReference.addDocument(data: ["title": title, "createdAt": createdAt, "dueDate": dueDate])
     }
 
     // function to read data
@@ -29,7 +29,7 @@ class TodoViewModel: ObservableObject {
             withAnimation {
                 self.todos = documents.compactMap { queryDocumentSnapshot -> TodoItem? in
                     return try? queryDocumentSnapshot.data(as: TodoItem.self)
-                }
+                }.sorted {$0.createdAt > $1.createdAt}
             }
         }
     }

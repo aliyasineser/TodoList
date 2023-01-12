@@ -13,35 +13,55 @@ import FirebaseFirestoreSwift
 struct DashboardView: View {
     @State var todoPrompt: String = ""
     @ObservedObject var viewModel: TodoViewModel
+    @State var dueDate: Date = Date()
+    @State var isPrompting: Bool = false
 
     init(viewModel: TodoViewModel = TodoViewModel()) {
         self.viewModel = viewModel
+
     }
 
     var body: some View {
         NavigationView {
             VStack {
-                HStack() {
-                    TextField("Todo", text: $todoPrompt)
-                        .padding()
+                VStack {
+                    HStack() {
+                        TextField("Todo", text: $todoPrompt)
+                            .onTapGesture {
+                                isPrompting = true
+                            }
+                            .onDisappear {
+                                isPrompting = false
+                            }
 
-                    Button {
-                        viewModel.addData(title: todoPrompt)
-                    } label: {
-                        Image(systemName: "plus")
-                            .fontWeight(.bold)
-                            .foregroundColor(.accentColor)
-                            .padding()
+                        Button {
+                            viewModel.addData(title: todoPrompt, dueDate: dueDate)
+                            withAnimation {
+                                todoPrompt = ""
+                                isPrompting = false
+                            }
+                        } label: {
+                            Image(systemName: "plus")
+                                .fontWeight(.bold)
+                                .foregroundColor(.accentColor)
+                                .padding()
+                        }
                     }
-                }
+                    if isPrompting {
+                        DatePicker("Due Date", selection: $dueDate)
+                    }
 
-                .padding(.horizontal, 20)
+                }
+                .padding(.horizontal, 30)
+
 
                 Divider()
                     .padding(.horizontal)
 
                 List {
-                    ForEach(viewModel.todos.sorted { $0.createdAt > $1.createdAt}) { item in
+                    ForEach(
+                        viewModel.todos
+                    ) { item in
                         NavigationLink {
                             TodoDetailView(item: item)
                         } label: {
@@ -53,7 +73,6 @@ struct DashboardView: View {
 
             }
             .toolbar {
-
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }

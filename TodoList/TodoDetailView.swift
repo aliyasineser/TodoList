@@ -13,11 +13,15 @@ struct TodoDetailView: View {
 
     var body: some View {
         List {
-            Text("Todo: \(item.title)")
+            Text(item.title)
             if let desc = item.desc {
                 Text("\(desc)")
             }
-            Text("Item at \(item.createdAt, formatter: dateFormatter)")
+
+            if let dueDate = item.dueDate {
+                Text("Due Date: \(dueDate, formatter: dateFormatter)")
+            }
+            Text("Last Change: \(item.createdAt, formatter: dateFormatter)")
         }
     }
 }
@@ -34,7 +38,9 @@ struct TodoDetailView_Previews: PreviewProvider {
         TodoDetailView(
             item: TodoItem(
                 title: "Title",
-                createdAt: Date()
+                desc: "Long Description with some Lorem Ipsum Dolor Sit Amet",
+                createdAt: Date(),
+                dueDate: Date()
             )
         )
     }
