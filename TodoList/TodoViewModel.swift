@@ -26,8 +26,10 @@ class TodoViewModel: ObservableObject {
                 return
             }
 
-            self.todos = documents.compactMap { queryDocumentSnapshot -> TodoItem? in
-                return try? queryDocumentSnapshot.data(as: TodoItem.self)
+            withAnimation {
+                self.todos = documents.compactMap { queryDocumentSnapshot -> TodoItem? in
+                    return try? queryDocumentSnapshot.data(as: TodoItem.self)
+                }
             }
         }
     }

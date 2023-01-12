@@ -20,58 +20,49 @@ struct DashboardView: View {
 
     var body: some View {
         NavigationView {
-
-            List {
-                Section("Todo") {
+            VStack {
+                HStack() {
                     TextField("Todo", text: $todoPrompt)
+                        .padding()
+
                     Button {
                         viewModel.addData(title: todoPrompt)
                     } label: {
-                        Text("Add")
+                        Image(systemName: "plus")
+                            .fontWeight(.bold)
+                            .foregroundColor(.accentColor)
+                            .padding()
                     }
                 }
 
-                Section {
-                    ForEach(viewModel.todos) { item in
+                .padding(.horizontal, 20)
+
+                Divider()
+                    .padding(.horizontal)
+
+                List {
+                    ForEach(viewModel.todos.sorted { $0.createdAt > $1.createdAt}) { item in
                         NavigationLink {
-                            List {
-                                Text("Todo: \(item.title)")
-                                if let desc = item.desc {
-                                    Text("\(desc)")
-                                }
-                                Text("Item at \(item.createdAt, formatter: itemFormatter)")
-                            }
+                            TodoDetailView(item: item)
                         } label: {
-                            Text(item.title)
+                            TodoItemCellView(title: item.title)
                         }
                     }
                     .onDelete(perform: viewModel.deleteData)
                 }
+
             }
             .toolbar {
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
-                ToolbarItem {
-                    Button {
-                        viewModel.addData(title: todoPrompt)
-                    } label: {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
             }
             .onAppear(perform: viewModel.fetchData)
-            Text("Select an item")
+            .navigationTitle("Todo List")
         }
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
