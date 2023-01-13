@@ -1,17 +1,15 @@
 # This workflow will build a Swift project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
 
-name: Swift
+name: Build and Test
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: macos-latest
 
     steps:
@@ -19,12 +17,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: |
-        brew install xcodegen
-        gem install xcpretty
-
-    - name: Generate Xcode project
-      run: xcodegen generate
+      run: gem install xcpretty
 
     - name: Build TodoList
       run: xcodebuild -workspace TodoList.xcworkspace -scheme TodoList -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.0' build
