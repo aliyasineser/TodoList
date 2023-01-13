@@ -12,11 +12,11 @@ import FirebaseFirestoreSwift
 
 struct DashboardView: View {
     @State var todoPrompt: String = ""
-    @ObservedObject var viewModel: TodoViewModel
+    @ObservedObject var viewModel: DashboardViewModel
     @State var dueDate: Date = Date()
     @State var isPrompting: Bool = false
 
-    init(viewModel: TodoViewModel = TodoViewModel()) {
+    init(viewModel: DashboardViewModel = DashboardViewModel()) {
         self.viewModel = viewModel
 
     }

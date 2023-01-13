@@ -1,17 +1,17 @@
 //
-//  TodoViewModel.swift
+//  NotesDatabase.swift
 //  TodoList
 //
-//  Created by Ali Yasin Eser on 08.01.23.
+//  Created by Ali Yasin Eser on 13.01.23.
 //
 
 import FirebaseFirestore
 import SwiftUI
 
-class TodoViewModel: ObservableObject {
+class NotesDatabase: ObservableObject {
 
     @Published var todos = [TodoItem]() // Reference to our Model
-    private var databaseReference = Firestore.firestore().collection("todoList-ec71e") // reference to our Firestore's collection
+    private var databaseReference = Firestore.firestore().collection(Constants.Firestore.notes.rawValue) // reference to our Firestore's collection
     // function to post data
     func addData(title: String, dueDate: Date) {
         let createdAt = Date()
@@ -19,19 +19,18 @@ class TodoViewModel: ObservableObject {
     }
 
     // function to read data
-    func fetchData() {
+    func fetchData() -> Published<[TodoItem]>.Publisher {
         databaseReference.addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
             }
 
-            withAnimation {
-                self.todos = documents.compactMap { queryDocumentSnapshot -> TodoItem? in
-                    return try? queryDocumentSnapshot.data(as: TodoItem.self)
-                }.sorted {$0.createdAt > $1.createdAt}
-            }
+            self.todos = documents.compactMap { queryDocumentSnapshot -> TodoItem? in
+                return try? queryDocumentSnapshot.data(as: TodoItem.self)
+            }.sorted {$0.createdAt > $1.createdAt}
         }
+        return $todos
     }
 
     // function to update data
