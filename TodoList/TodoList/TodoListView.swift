@@ -28,6 +28,7 @@ struct TodoListView: View {
             }
             .onDelete(perform: viewModel.deleteData)
         }
+        .onAppear(perform: viewModel.fetchData)
     }
 }
 

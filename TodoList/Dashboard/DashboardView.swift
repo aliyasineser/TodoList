@@ -12,13 +12,12 @@ import FirebaseFirestoreSwift
 
 struct DashboardView: View {
     @State var todoPrompt: String = ""
-    @ObservedObject var viewModel: DashboardViewModel
+    private var viewModel: TodoListViewModel
     @State var dueDate: Date = Date()
     @State var isPrompting: Bool = false
 
-    init(viewModel: DashboardViewModel = DashboardViewModel()) {
-        self.viewModel = viewModel
-
+    init() {
+        self.viewModel = TodoListViewModel()
     }
 
     var body: some View {
@@ -35,7 +34,10 @@ struct DashboardView: View {
                             }
 
                         Button {
-                            viewModel.addData(title: todoPrompt, dueDate: dueDate)
+                            viewModel.addData(
+                                title: todoPrompt,
+                                dueDate: dueDate
+                            )
                             withAnimation {
                                 todoPrompt = ""
                                 isPrompting = false
@@ -58,18 +60,7 @@ struct DashboardView: View {
                 Divider()
                     .padding(.horizontal)
 
-                List {
-                    ForEach(
-                        viewModel.todos
-                    ) { item in
-                        NavigationLink {
-                            TodoDetailView(item: item)
-                        } label: {
-                            TodoItemCellView(title: item.title)
-                        }
-                    }
-                    .onDelete(perform: viewModel.deleteData)
-                }
+                TodoListView(viewModel: viewModel)
 
             }
             .toolbar {
@@ -77,7 +68,6 @@ struct DashboardView: View {
                     EditButton()
                 }
             }
-            .onAppear(perform: viewModel.fetchData)
             .navigationTitle("Todo List")
         }
     }

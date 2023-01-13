@@ -23,6 +23,8 @@ struct TodoDetailView: View {
             }
             Text("Last Change: \(item.createdAt, formatter: dateFormatter)")
         }
+        .navigationTitle(item.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

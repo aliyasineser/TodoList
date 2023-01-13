@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD2199A7296B1279009533A7 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2199A6296B1279009533A7 /* DashboardViewModel.swift */; };
 		DD2199A9296B1765009533A7 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2199A8296B1765009533A7 /* TodoItem.swift */; };
 		DD2199AB296B1877009533A7 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DD2199AA296B1877009533A7 /* .gitignore */; };
 		DD23EB602970ED0200853B8B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD23EB5F2970ED0200853B8B /* TodoListView.swift */; };
@@ -54,7 +53,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DD2199A6296B1279009533A7 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		DD2199A8296B1765009533A7 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		DD2199AA296B1877009533A7 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		DD23EB5F2970ED0200853B8B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				DD46A81B2968FFF1008D4690 /* DashboardView.swift */,
-				DD2199A6296B1279009533A7 /* DashboardViewModel.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -369,7 +366,6 @@
 				DD291BE5296F827F00DA6E9D /* TodoItemCellView.swift in Sources */,
 				DD23EB602970ED0200853B8B /* TodoListView.swift in Sources */,
 				DD291BE3296F81EB00DA6E9D /* TodoDetailView.swift in Sources */,
-				DD2199A7296B1279009533A7 /* DashboardViewModel.swift in Sources */,
 				DD23EB652970ED8300853B8B /* Constants.swift in Sources */,
 				DD46A81C2968FFF1008D4690 /* DashboardView.swift in Sources */,
 				DD23EB622970ED4B00853B8B /* NotesDatabase.swift in Sources */,
