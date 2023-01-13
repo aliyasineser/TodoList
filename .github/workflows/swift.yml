@@ -20,7 +20,7 @@ jobs:
       run: gem install xcpretty
 
     - name: Build TodoList
-      run: xcodebuild -workspace TodoList.xcworkspace -scheme TodoList -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.0' build
+      run: xcodebuild -project TodoList.xcodeproj -scheme TodoList -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.0' build
 
     - name: Test TodoList
-      run: xcodebuild -workspace TodoList.xcworkspace -scheme TodoList -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.0' test | xcpretty
+      run: xcodebuild -project TodoList.xcodeproj -scheme TodoList -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.0' test | xcpretty
