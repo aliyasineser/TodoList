@@ -13,9 +13,12 @@ class NotesDatabase: ObservableObject {
     @Published var todos = [TodoItem]() // Reference to our Model
     private var databaseReference = Firestore.firestore().collection(Constants.Firestore.notes.rawValue) // reference to our Firestore's collection
     // function to post data
-    func addData(title: String, dueDate: Date) {
+    func addData(title: String, description: String?, dueDate: Date?) {
         let createdAt = Date()
-        _ = databaseReference.addDocument(data: ["title": title, "createdAt": createdAt, "dueDate": dueDate])
+        var data: [String: Any] = ["title": title, "createdAt": createdAt]
+        if let description { data["desc"] = description }
+        if let dueDate { data["dueDate"] = dueDate }
+        _ = databaseReference.addDocument(data: data)
     }
 
     // function to read data

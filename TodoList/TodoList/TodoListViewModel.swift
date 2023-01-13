@@ -17,8 +17,8 @@ class TodoListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     // function to post data
-    func addData(title: String, dueDate: Date) {
-        db.addData(title: title, dueDate: dueDate)
+    func addData(title: String, description: String?, dueDate: Date?) {
+        db.addData(title: title, description: description, dueDate: dueDate)
     }
 
     // function to read data
