@@ -32,7 +32,7 @@ class TodoListViewModel: ObservableObject {
 
     // function to update data
     func updateData(title: String, id: String) {
-        db.updateData(title: title, id: id)
+        db.updateData(id: id, title: title)
     }
 
     // function to delete data

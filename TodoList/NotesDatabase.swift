@@ -37,13 +37,29 @@ class NotesDatabase: ObservableObject {
     }
 
     // function to update data
-    func updateData(title: String, id: String) {
+    func updateData(id: String, title: String) {
         databaseReference.document(id).updateData(["title" : title]) { error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("Note updated succesfully")
-            }
+            self.handleError(error)
+        }
+    }
+
+    func updateData(id: String, desc: String) {
+        databaseReference.document(id).updateData(["desc" : desc]) { error in
+            self.handleError(error)
+        }
+    }
+
+    func updateData(id: String, dueDate: Date) {
+        databaseReference.document(id).updateData(["dueDate" : dueDate]) { error in
+            self.handleError(error)
+        }
+    }
+
+    private func handleError(_ error: Error?) {
+        if let error = error {
+            print(error.localizedDescription)
+        } else {
+            print("Note updated succesfully")
         }
     }
 
