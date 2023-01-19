@@ -25,7 +25,7 @@ struct TodoDetailView: View {
         List {
 
             TextField("Todo", text: $title)
-        
+
             if item.desc != nil {
                 TextField("Description", text: $description)
             }
@@ -44,7 +44,12 @@ struct TodoDetailView: View {
             if let dueDate = item.dueDate { self.dueDate = dueDate }
         }
         .onDisappear{
-            if let id = item.id, (description != item.desc || title != item.title || dueDate != item.dueDate) {
+            if let id = item.id,
+                (
+                    title != item.title ||
+                    ( item.desc != nil && description != item.desc ) ||
+                    ( item.dueDate != nil && dueDate != item.dueDate )
+                ) {
                 db.updateData(
                     id: id,
                     item: TodoItem(
