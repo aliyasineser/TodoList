@@ -9,22 +9,54 @@ import SwiftUI
 
 struct TodoDetailView: View {
 
-    var item: TodoItem
+    private var item: TodoItem
+
+    @State var title: String = ""
+    @State var dueDate: Date = Date()
+    @State var description: String = ""
+
+    private var db = NotesDatabase()
+
+    init(item: TodoItem) {
+        self.item = item
+    }
 
     var body: some View {
         List {
-            Text(item.title)
-            if let desc = item.desc {
-                Text("\(desc)")
+
+            TextField("Todo", text: $title)
+        
+            if item.desc != nil {
+                TextField("Description", text: $description)
             }
 
-            if let dueDate = item.dueDate {
-                Text("Due Date: \(dueDate, formatter: dateFormatter)")
+            if item.dueDate != nil {
+                DatePicker("Due Date", selection: $dueDate)
             }
+
             Text("Last Change: \(item.createdAt, formatter: dateFormatter)")
         }
         .navigationTitle(item.title)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            self.title = item.title
+            if let desc = item.desc { self.description = desc }
+            if let dueDate = item.dueDate { self.dueDate = dueDate }
+        }
+        .onDisappear{
+            if let id = item.id, (description != item.desc || title != item.title || dueDate != item.dueDate) {
+                db.updateData(
+                    id: id,
+                    item: TodoItem(
+                        id: item.id,
+                        title: title,
+                        desc: description,
+                        createdAt: item.createdAt, // ignored
+                        dueDate: dueDate
+                    )
+                )
+            }
+        }
     }
 }
 

@@ -37,20 +37,13 @@ class NotesDatabase: ObservableObject {
     }
 
     // function to update data
-    func updateData(id: String, title: String) {
-        databaseReference.document(id).updateData(["title" : title]) { error in
-            self.handleError(error)
-        }
-    }
+    func updateData(id: String, item: TodoItem) {
+        let lastChange = Date()
+        var data: [String: Any] = ["title": item.title, "createdAt": lastChange]
+        if let description = item.desc { data["desc"] = description }
+        if let dueDate = item.dueDate { data["dueDate"] = dueDate }
 
-    func updateData(id: String, desc: String) {
-        databaseReference.document(id).updateData(["desc" : desc]) { error in
-            self.handleError(error)
-        }
-    }
-
-    func updateData(id: String, dueDate: Date) {
-        databaseReference.document(id).updateData(["dueDate" : dueDate]) { error in
+        databaseReference.document(id).updateData(data) { error in
             self.handleError(error)
         }
     }
