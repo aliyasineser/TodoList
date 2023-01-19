@@ -20,15 +20,19 @@ struct TodoListView: View {
             ForEach(
                 viewModel.todos
             ) { item in
-                NavigationLink {
-                    TodoDetailView(item: item)
-                } label: {
-                    TodoItemCellView(title: item.title)
-                }
+                NavigationLink(item.title, value: item)
+                    .font(.headline)
+                    .fontWeight(.regular)
+                    .foregroundColor(.primary)
             }
             .onDelete(perform: viewModel.deleteData)
         }
         .onAppear(perform: viewModel.fetchData)
+        .navigationDestination(for: TodoItem.self) { item in
+            TodoDetailView(
+                viewModel: TodoDetailDefaultViewModel(item: item)
+            )
+        }
     }
 }
 

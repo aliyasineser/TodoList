@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct TodoItem: Identifiable, Codable {
+struct TodoItem: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var title: String
     var desc: String?

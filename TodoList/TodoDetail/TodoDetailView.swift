@@ -9,58 +9,31 @@ import SwiftUI
 
 struct TodoDetailView: View {
 
-    private var item: TodoItem
+    @ObservedObject var viewModel: TodoDetailDefaultViewModel
 
-    @State var title: String = ""
-    @State var dueDate: Date = Date()
-    @State var description: String = ""
-
-    private var db = NotesDatabase()
-
-    init(item: TodoItem) {
-        self.item = item
+    init(viewModel: TodoDetailDefaultViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
         List {
 
-            TextField("Todo", text: $title)
+            TextField("Todo", text: $viewModel.title)
 
-            if item.desc != nil {
-                TextField("Description", text: $description)
+            if viewModel.item.desc != nil {
+                TextField("Description", text: $viewModel.description)
             }
 
-            if item.dueDate != nil {
-                DatePicker("Due Date", selection: $dueDate)
+            if viewModel.item.dueDate != nil {
+                DatePicker("Due Date", selection: $viewModel.dueDate)
             }
 
-            Text("Last Change: \(item.createdAt, formatter: dateFormatter)")
+            Text("Last Change: \(viewModel.item.createdAt, formatter: dateFormatter)")
         }
-        .navigationTitle(item.title)
+        .navigationTitle(viewModel.item.title)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            self.title = item.title
-            if let desc = item.desc { self.description = desc }
-            if let dueDate = item.dueDate { self.dueDate = dueDate }
-        }
         .onDisappear{
-            if let id = item.id,
-                (
-                    title != item.title ||
-                    ( item.desc != nil && description != item.desc ) ||
-                    ( item.dueDate != nil && dueDate != item.dueDate )
-                ) {
-                db.updateData(
-                    id: id,
-                    item: TodoItem(
-                        id: item.id,
-                        title: title,
-                        desc: description,
-                        createdAt: item.createdAt, // ignored
-                        dueDate: dueDate
-                    )
-                )
-            }
+            viewModel.updateData()
         }
     }
 }
@@ -75,11 +48,11 @@ private let dateFormatter: DateFormatter = {
 struct TodoDetailView_Previews: PreviewProvider {
     static var previews: some View {
         TodoDetailView(
-            item: TodoItem(
-                title: "Title",
-                desc: "Long Description with some Lorem Ipsum Dolor Sit Amet",
-                createdAt: Date(),
-                dueDate: Date()
+            viewModel: TodoDetailDefaultViewModel(
+                item: TodoItem(
+                    title: "Title",
+                    createdAt: .now
+                )
             )
         )
     }
