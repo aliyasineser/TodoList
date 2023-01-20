@@ -17,17 +17,18 @@ protocol TodoDetailViewModel: ObservableObject {
     var description: String { get set }
 }
 
-final class TodoDetailViewModelImpl: TodoDetailViewModel {
+final class TodoDetailViewModelImpl<NotesDatabase>: TodoDetailViewModel where NotesDatabase: NotesDB {
 
-    private var db = NotesDatabase()
+    private var db: NotesDatabase
     public var item: TodoItem
 
     @Published var title: String = ""
     @Published var dueDate: Date = Date()
     @Published var description: String = ""
 
-    init(item: TodoItem) {
+    init(item: TodoItem, db: NotesDatabase) {
         self.item = item
+        self.db = db
         
         self.title = item.title
         if let desc = item.desc { self.description = desc }

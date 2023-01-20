@@ -11,7 +11,6 @@ import Combine
 
 protocol TodoListViewModel: ObservableObject {
     var todos: [TodoItem] { get set }
-    var db: NotesDatabase { get set}
 
     func fetchData()
     func addData(title: String, description: String?, dueDate: Date?)
@@ -19,10 +18,14 @@ protocol TodoListViewModel: ObservableObject {
     func deleteData(at indexSet: IndexSet)
 }
 
-final class TodoListViewModelImpl: TodoListViewModel {
+final class TodoListViewModelImpl<NotesDatabase>: TodoListViewModel where NotesDatabase: NotesDB {
 
     @Published var todos = [TodoItem]() // Reference to our Model
-    @ObservedObject var db = NotesDatabase()
+    @ObservedObject var db: NotesDatabase
+
+    init(db: NotesDatabase) {
+        self.db = db
+    }
 
     private var cancellables = Set<AnyCancellable>()
 

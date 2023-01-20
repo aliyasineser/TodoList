@@ -175,6 +175,7 @@
 		DD46A8182968FFF1008D4690 /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				DD475485297A226D00C4883D /* Services */,
 				DD23EB5E2970ECB000853B8B /* Resources */,
 				DD23EB5D2970EC9E00853B8B /* TodoDetail */,
 				DD23EB5C2970EC9300853B8B /* Entities */,
@@ -184,7 +185,6 @@
 				DD46A8242968FFF1008D4690 /* TodoList.xcdatamodeld */,
 				DD2199AA296B1877009533A7 /* .gitignore */,
 				DD46A81F2968FFF1008D4690 /* Preview Content */,
-				DD23EB612970ED4B00853B8B /* NotesDatabase.swift */,
 				DD23EB642970ED8300853B8B /* Constants.swift */,
 			);
 			path = TodoList;
@@ -213,6 +213,14 @@
 				DD46A83B2968FFF2008D4690 /* TodoListUITestsLaunchTests.swift */,
 			);
 			path = TodoListUITests;
+			sourceTree = "<group>";
+		};
+		DD475485297A226D00C4883D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DD23EB612970ED4B00853B8B /* NotesDatabase.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

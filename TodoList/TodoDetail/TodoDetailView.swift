@@ -44,7 +44,8 @@ struct TodoDetailView_Previews: PreviewProvider {
                 item: TodoItem(
                     title: "Title",
                     createdAt: .now
-                )
+                ),
+                db: NotesFirestoreDB()
             )
         )
     }
