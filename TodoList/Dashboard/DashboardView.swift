@@ -26,34 +26,12 @@ struct DashboardView: View {
             VStack {
                 VStack {
                     HStack() {
-                        TextField("Todo", text: $todoPrompt)
-                            .onTapGesture {
-                                isPrompting = true
-                            }
-                            .onDisappear {
-                                isPrompting = false
-                            }
-
-                        Button {
-                            viewModel.addData(
-                                title: todoPrompt,
-                                description: description.isEmpty ? nil : description,
-                                dueDate: dueDate
-                            )
-                            withAnimation {
-                                todoPrompt = ""
-                                description = ""
-                                isPrompting = false
-                            }
-                        } label: {
-                            AddItemButton()
+                        TodoItemTextField(todoPrompt: $todoPrompt, isPrompting: $isPrompting)
+                        TodoItemAddButton(todoPrompt: $todoPrompt, isPrompting: $isPrompting, description: $description, dueDate: $dueDate) { title, description, dueDate in
+                            viewModel.addData(title: title, description: description, dueDate: dueDate)
                         }
                     }
-
-                    if isPrompting {
-                        TextField("Description", text: $description)
-                        DatePicker("Due Date", selection: $dueDate)
-                    }
+                    TodoItemDetailField(description: $description, dueDate: $dueDate, isPrompting: $isPrompting)
                 }
                 .padding(.horizontal, 30)
 
@@ -61,7 +39,6 @@ struct DashboardView: View {
                     .padding(.horizontal)
 
                 TodoListView(viewModel: viewModel)
-
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -73,7 +50,65 @@ struct DashboardView: View {
     }
 }
 
-struct AddItemButton: View {
+private struct TodoItemDetailField: View {
+    @Binding var description: String
+    @Binding var dueDate: Date
+    @Binding var isPrompting: Bool
+
+    var body: some View {
+        if isPrompting {
+            TextField("Description", text: $description)
+            DatePicker("Due Date", selection: $dueDate)
+        }
+    }
+
+}
+
+private struct TodoItemTextField: View {
+    @Binding var todoPrompt: String
+    @Binding var isPrompting: Bool
+
+    var body: some View {
+        TextField("Todo", text: $todoPrompt)
+            .onTapGesture {
+                withAnimation {
+                    isPrompting = true
+                }
+            }
+            .onDisappear {
+                withAnimation {
+                    isPrompting = false
+                }
+            }
+    }
+}
+
+private struct TodoItemAddButton: View {
+    @Binding var todoPrompt: String
+    @Binding var isPrompting: Bool
+    @Binding var description: String
+    @Binding var dueDate: Date
+    var addData: ((String, String?, Date?) -> Void)
+
+    var body: some View {
+        Button {
+            addData(
+                todoPrompt,
+                description.isEmpty ? nil : description,
+                dueDate
+            )
+            withAnimation {
+                todoPrompt = ""
+                description = ""
+                isPrompting = false
+            }
+        } label: {
+            AddItemButton()
+        }
+    }
+}
+
+private struct AddItemButton: View {
     var body: some View {
         Image(systemName: "plus")
             .fontWeight(.bold)

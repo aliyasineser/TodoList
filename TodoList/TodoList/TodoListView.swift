@@ -11,7 +11,7 @@ struct TodoListView: View {
 
     @ObservedObject var viewModel: TodoListViewModel
 
-    init(viewModel: TodoListViewModel = TodoListViewModel()) {
+    init(viewModel: TodoListViewModel) {
         self.viewModel = viewModel
     }
 
