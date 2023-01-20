@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct TodoListView: View {
+struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
 
-    @ObservedObject var viewModel: TodoListViewModel
+    @ObservedObject var viewModel: ViewModel
 
-    init(viewModel: TodoListViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
 
@@ -30,7 +30,7 @@ struct TodoListView: View {
         .onAppear(perform: viewModel.fetchData)
         .navigationDestination(for: TodoItem.self) { item in
             TodoDetailView(
-                viewModel: TodoDetailDefaultViewModel(item: item)
+                viewModel: TodoDetailViewModelImpl(item: item)
             )
         }
     }
@@ -38,6 +38,6 @@ struct TodoListView: View {
 
 struct TodoListView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoListView()
+        TodoListView(viewModel: TodoListViewModelImpl())
     }
 }

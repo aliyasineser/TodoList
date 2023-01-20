@@ -7,27 +7,19 @@
 
 import SwiftUI
 
-struct TodoDetailView: View {
+struct TodoDetailView<ViewModel>: View where ViewModel: TodoDetailViewModel {
 
-    @ObservedObject var viewModel: TodoDetailDefaultViewModel
+    @ObservedObject var viewModel: ViewModel
 
-    init(viewModel: TodoDetailDefaultViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
 
     var body: some View {
         List {
-
             TextField("Todo", text: $viewModel.title)
-
-            if viewModel.item.desc != nil {
-                TextField("Description", text: $viewModel.description)
-            }
-
-            if viewModel.item.dueDate != nil {
-                DatePicker("Due Date", selection: $viewModel.dueDate)
-            }
-
+            if viewModel.item.desc != nil { TextField("Description", text: $viewModel.description) }
+            if viewModel.item.dueDate != nil { DatePicker("Due Date", selection: $viewModel.dueDate) }
             Text("Last Change: \(viewModel.item.createdAt, formatter: dateFormatter)")
         }
         .navigationTitle(viewModel.item.title)
@@ -41,14 +33,14 @@ struct TodoDetailView: View {
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
-    formatter.timeStyle = .medium
+    formatter.timeStyle = .short
     return formatter
 }()
 
 struct TodoDetailView_Previews: PreviewProvider {
     static var previews: some View {
         TodoDetailView(
-            viewModel: TodoDetailDefaultViewModel(
+            viewModel: TodoDetailViewModelImpl(
                 item: TodoItem(
                     title: "Title",
                     createdAt: .now

@@ -9,10 +9,20 @@ import FirebaseFirestore
 import SwiftUI
 import Combine
 
-class TodoListViewModel: ObservableObject {
+protocol TodoListViewModel: ObservableObject {
+    var todos: [TodoItem] { get set }
+    var db: NotesDatabase { get set}
+
+    func fetchData()
+    func addData(title: String, description: String?, dueDate: Date?)
+    func updateData(id: String, item: TodoItem)
+    func deleteData(at indexSet: IndexSet)
+}
+
+final class TodoListViewModelImpl: TodoListViewModel {
 
     @Published var todos = [TodoItem]() // Reference to our Model
-    @ObservedObject private var db = NotesDatabase()
+    @ObservedObject var db = NotesDatabase()
 
     private var cancellables = Set<AnyCancellable>()
 

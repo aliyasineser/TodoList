@@ -8,13 +8,17 @@
 import Foundation
 import Combine
 
-protocol TodoDetailViewModel {
+protocol TodoDetailViewModel: ObservableObject {
     func updateData()
-
     var item: TodoItem { get }
+
+    var title: String { get set }
+    var dueDate: Date { get set }
+    var description: String { get set }
 }
 
-final class TodoDetailDefaultViewModel: ObservableObject {
+final class TodoDetailViewModelImpl: TodoDetailViewModel {
+
     private var db = NotesDatabase()
     public var item: TodoItem
 
@@ -31,12 +35,7 @@ final class TodoDetailDefaultViewModel: ObservableObject {
     }
 
     func updateData() {
-        if let id = item.id,
-            (
-                title != item.title ||
-                ( item.desc != nil && description != item.desc ) ||
-                ( item.dueDate != nil && dueDate != item.dueDate )
-            ) {
+        if let id = item.id, itemHasChanged() {
             db.updateData(
                 id: id,
                 item: TodoItem(
@@ -50,4 +49,9 @@ final class TodoDetailDefaultViewModel: ObservableObject {
         }
     }
 
+    private func itemHasChanged() -> Bool {
+        return title != item.title ||
+        ( item.desc != nil && description != item.desc ) ||
+        ( item.dueDate != nil && dueDate != item.dueDate )
+    }
 }

@@ -11,14 +11,16 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct DashboardView: View {
+
+    private var viewModel: TodoListViewModelImpl
+
     @State var todoPrompt: String = ""
-    private var viewModel: TodoListViewModel
     @State var dueDate: Date = Date()
     @State var description: String = ""
     @State var isPrompting: Bool = false
 
     init() {
-        self.viewModel = TodoListViewModel()
+        self.viewModel = TodoListViewModelImpl()
     }
 
     var body: some View {
@@ -50,6 +52,7 @@ struct DashboardView: View {
     }
 }
 
+// MARK: TodoItemDetailField
 private struct TodoItemDetailField: View {
     @Binding var description: String
     @Binding var dueDate: Date
@@ -64,6 +67,7 @@ private struct TodoItemDetailField: View {
 
 }
 
+// MARK: TodoItemTextField
 private struct TodoItemTextField: View {
     @Binding var todoPrompt: String
     @Binding var isPrompting: Bool
@@ -83,6 +87,7 @@ private struct TodoItemTextField: View {
     }
 }
 
+// MARK: TodoItemAddButton
 private struct TodoItemAddButton: View {
     @Binding var todoPrompt: String
     @Binding var isPrompting: Bool
@@ -108,6 +113,7 @@ private struct TodoItemAddButton: View {
     }
 }
 
+// MARK: AddItemButton
 private struct AddItemButton: View {
     var body: some View {
         Image(systemName: "plus")
