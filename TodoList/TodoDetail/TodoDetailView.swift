@@ -18,15 +18,13 @@ struct TodoDetailView<ViewModel>: View where ViewModel: TodoDetailViewModel {
     var body: some View {
         List {
             TextField("Todo", text: $viewModel.title)
-            if viewModel.item.desc != nil { TextField("Description", text: $viewModel.description) }
-            if viewModel.item.dueDate != nil { DatePicker("Due Date", selection: $viewModel.dueDate) }
+            TextField("Description", text: $viewModel.description)
+            DatePicker("Due Date", selection: $viewModel.dueDate)
             Text("Last Change: \(viewModel.item.createdAt, formatter: dateFormatter)")
         }
+//        .onAppear(perform: viewModel.onAppear)
         .navigationTitle(viewModel.item.title)
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear{
-            viewModel.updateData()
-        }
     }
 }
 
