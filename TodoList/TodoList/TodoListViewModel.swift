@@ -18,12 +18,12 @@ protocol TodoListViewModel: ObservableObject {
     func deleteData(at indexSet: IndexSet)
 }
 
-final class TodoListViewModelImpl<NotesDatabase>: TodoListViewModel where NotesDatabase: NotesDB {
+final class TodoListViewModelImpl: TodoListViewModel{
 
     @Published var todos = [TodoItem]() // Reference to our Model
-    @ObservedObject var db: NotesDatabase
+    var db: any NotesDB
 
-    init(db: NotesDatabase) {
+    init(db: any NotesDB) {
         self.db = db
     }
 

@@ -23,7 +23,7 @@ struct TodoDetailView<ViewModel>: View where ViewModel: TodoDetailViewModel {
             Text("Last Change: \(viewModel.item.createdAt, formatter: dateFormatter)")
         }
 //        .onAppear(perform: viewModel.onAppear)
-        .navigationTitle(viewModel.item.title)
+        .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -43,7 +43,7 @@ struct TodoDetailView_Previews: PreviewProvider {
                     title: "Title",
                     createdAt: .now
                 ),
-                db: NotesFirestoreDB()
+                db: NotesDatabaseFactory().create()
             )
         )
     }

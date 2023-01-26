@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 struct DashboardView: View {
 
-    private var viewModel: TodoListViewModelImpl<NotesFirestoreDB>
+    private var viewModel: TodoListViewModelImpl
 
     @State var todoPrompt: String = ""
     @State var dueDate: Date = Date()

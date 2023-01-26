@@ -30,7 +30,7 @@ struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
         .onAppear(perform: viewModel.fetchData)
         .navigationDestination(for: TodoItem.self) { item in
             TodoDetailView(
-                viewModel: TodoDetailViewModelImpl(item: item, db: NotesFirestoreDB())
+                viewModel: TodoDetailViewModelImpl(item: item, db: NotesDatabaseFactory().create())
             )
         }
     }

@@ -8,19 +8,11 @@
 import FirebaseFirestore
 import SwiftUI
 
-protocol NotesDB: ObservableObject {
-    var todos: [TodoItem] { get }
-
-    func fetchData() -> Published<[TodoItem]>.Publisher
-    func addData(title: String, description: String?, dueDate: Date?)
-    func updateData(id: String, item: TodoItem)
-    func deleteData(at indexSet: IndexSet)
-}
-
 final class NotesFirestoreDB: NotesDB {
 
     @Published var todos = [TodoItem]() // Reference to our Model
     private var databaseReference = Firestore.firestore().collection(Constants.Firestore.notes.rawValue) // reference to our Firestore's collection
+    
     // function to post data
     func addData(title: String, description: String?, dueDate: Date?) {
         let createdAt = Date()
