@@ -30,7 +30,10 @@ struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
         .onAppear(perform: viewModel.fetchData)
         .navigationDestination(for: TodoItem.self) { item in
             TodoDetailView(
-                viewModel: TodoDetailViewModelImpl(item: item, db: NotesDatabaseFactory().create())
+                viewModel: TodoDetailViewModelImpl(
+                    item: item,
+                    db: NotesDatabaseFactory().create()
+                )
             )
         }
     }
@@ -39,7 +42,7 @@ struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
 struct TodoListView_Previews: PreviewProvider {
     static var previews: some View {
         TodoListView(
-            viewModel: TodoListViewModelImpl(db: NotesFirestoreDB())
+            viewModel: TodoListViewModelImpl(db: NotesDatabaseFactory().create())
         )
     }
 }

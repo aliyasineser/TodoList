@@ -26,6 +26,9 @@ final class NotesUserDefaultDB: NotesDB {
     func addData(title: String, description: String?, dueDate: Date?) {
         let createdAt = Date()
         todos.append(TodoItem(id: UUID().uuidString, title: title, desc: description, createdAt: createdAt, dueDate: dueDate))
+        if let encoded = try? JSONEncoder().encode(todos) {
+            defaults.set(encoded, forKey: key)
+        }
     }
 
     func updateData(id: String, item: TodoItem) {
