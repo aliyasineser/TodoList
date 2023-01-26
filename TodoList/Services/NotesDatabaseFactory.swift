@@ -14,7 +14,7 @@ public enum DBTypes {
 
 final class NotesDatabaseFactory {
 
-    func create(type: DBTypes = .firebase) -> any NotesDB {
+    func create(type: DBTypes = .userDefaults) -> any NotesDB {
         switch type {
         case .firebase:
             return NotesFirestoreDB()

@@ -42,6 +42,7 @@ final class TodoDetailViewModelImpl: TodoDetailViewModel {
 
     func onAppear() {
         subscribeFields()
+        _ = db.fetchData()
     }
 
     private func subscribeFields() {
