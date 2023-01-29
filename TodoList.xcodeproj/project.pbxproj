@@ -34,7 +34,6 @@
 		DD46A85C2969019E008D4690 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = DD46A85B2969019E008D4690 /* FirebaseStorageCombine-Community */; };
 		DD56481C2978C957003E4691 /* TodoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD56481B2978C957003E4691 /* TodoDetailViewModel.swift */; };
 		DDE210B92981EF76000FDC73 /* NotesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE210B82981EF76000FDC73 /* NotesDB.swift */; };
-		DDE210BB2981EF9E000FDC73 /* NotesUserDefaultDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE210BA2981EF9E000FDC73 /* NotesUserDefaultDB.swift */; };
 		DDE210BD2981F33D000FDC73 /* NotesDatabaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE210BC2981F33D000FDC73 /* NotesDatabaseFactory.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +76,6 @@
 		DD46A848296900A5008D4690 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD56481B2978C957003E4691 /* TodoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewModel.swift; sourceTree = "<group>"; };
 		DDE210B82981EF76000FDC73 /* NotesDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesDB.swift; sourceTree = "<group>"; };
-		DDE210BA2981EF9E000FDC73 /* NotesUserDefaultDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesUserDefaultDB.swift; sourceTree = "<group>"; };
 		DDE210BC2981F33D000FDC73 /* NotesDatabaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesDatabaseFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,7 +224,6 @@
 			children = (
 				DD23EB612970ED4B00853B8B /* NotesFirebaseDB.swift */,
 				DDE210B82981EF76000FDC73 /* NotesDB.swift */,
-				DDE210BA2981EF9E000FDC73 /* NotesUserDefaultDB.swift */,
 				DDE210BC2981F33D000FDC73 /* NotesDatabaseFactory.swift */,
 			);
 			path = Services;
@@ -380,7 +377,6 @@
 			files = (
 				DD23EB682970F1B600853B8B /* TodoListViewModel.swift in Sources */,
 				DD2199A9296B1765009533A7 /* TodoItem.swift in Sources */,
-				DDE210BB2981EF9E000FDC73 /* NotesUserDefaultDB.swift in Sources */,
 				DD23EB602970ED0200853B8B /* TodoListView.swift in Sources */,
 				DDE210B92981EF76000FDC73 /* NotesDB.swift in Sources */,
 				DD291BE3296F81EB00DA6E9D /* TodoDetailView.swift in Sources */,
