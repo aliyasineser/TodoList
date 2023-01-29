@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol NotesDB {
+protocol NotesDB: ObservableObject {
     func fetchData() -> Published<[TodoItem]>.Publisher
     func addData(title: String, description: String?, dueDate: Date?)
     func updateData(id: String, item: TodoItem)
