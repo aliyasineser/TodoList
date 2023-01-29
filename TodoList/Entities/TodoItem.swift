@@ -15,3 +15,12 @@ struct TodoItem: Identifiable, Codable, Hashable {
     var createdAt: Date
     var dueDate: Date?
 }
+
+
+struct TodoItemAdapter: Identifiable, Codable, Hashable {
+    var id: String?
+    var title: String
+    var desc: String?
+    var createdAt: Date
+    var dueDate: Date?
+}

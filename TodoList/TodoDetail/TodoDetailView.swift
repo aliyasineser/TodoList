@@ -22,7 +22,7 @@ struct TodoDetailView<ViewModel>: View where ViewModel: TodoDetailViewModel {
             DatePicker("Due Date", selection: $viewModel.dueDate)
             Text("Last Change: \(viewModel.item.createdAt, formatter: dateFormatter)")
         }
-//        .onAppear(perform: viewModel.onAppear)
+        .onAppear(perform: viewModel.onAppear)
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
     }
