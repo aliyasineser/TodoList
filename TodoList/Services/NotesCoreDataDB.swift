@@ -13,11 +13,6 @@ final class NotesCoreDataDB: NotesDB {
 
     let viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext
 
-    private let defaults = UserDefaults.standard
-    private let key = "TodoList_FullList"
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
-
     public static let shared = NotesCoreDataDB()
 
     private init() { /* Do Not Implement */ }
@@ -50,8 +45,6 @@ final class NotesCoreDataDB: NotesDB {
         todos.append(item)
         saveContext()
     }
-
-
 
     func updateData(id: String, item: TodoItem) {
         let request = TodoItemCD.fetchRequest()
