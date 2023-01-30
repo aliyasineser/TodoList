@@ -10,16 +10,19 @@ import Foundation
 public enum DBTypes {
     case firebase
     case userDefaults
+    case coreData
 }
 
 final class NotesDatabaseFactory {
 
-    func create(type: DBTypes = .userDefaults) -> any NotesDB {
+    func create(type: DBTypes = .coreData) -> any NotesDB {
         switch type {
         case .firebase:
             return NotesFirestoreDB()
         case .userDefaults:
             return NotesUserDefaultDB.shared
+        case .coreData:
+            return NotesCoreDataDB.shared
         }
     }
 
