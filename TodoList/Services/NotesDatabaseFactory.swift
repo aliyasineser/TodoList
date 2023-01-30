@@ -19,7 +19,7 @@ final class NotesDatabaseFactory {
         case .firebase:
             return NotesFirestoreDB()
         case .userDefaults:
-            return NotesUserDefaultDB()
+            return NotesUserDefaultDB.shared
         }
     }
 

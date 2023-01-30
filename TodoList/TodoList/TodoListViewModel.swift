@@ -38,7 +38,9 @@ final class TodoListViewModelImpl: TodoListViewModel{
     func fetchData() {
         db.fetchData()
             .sink { updatedTodoList in
-                self.todos = updatedTodoList
+                DispatchQueue.main.async {
+                    self.todos = updatedTodoList
+                }
             }
             .store(in: &cancellables)
     }

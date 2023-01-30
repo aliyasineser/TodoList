@@ -6,16 +6,22 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class NotesUserDefaultDB: NotesDB {
     @Published var todos: [TodoItem] = []
 
     private let defaults = UserDefaults.standard
+    private let key = "TodoList_FullList"
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
+    public static let shared = NotesUserDefaultDB()
+
+    private init() { /* Do Not Implement */ }
+
     func fetchData() -> Published<[TodoItem]>.Publisher {
-        guard let fetchedData = defaults.data(forKey: "TodoList") else { return $todos }
+        guard let fetchedData = defaults.data(forKey: key) else { return $todos }
 
         if let fetchedTodos = try? decoder.decode([TodoItemAdapter].self, from: fetchedData) {
             todos = fetchedTodos.map{ TodoItem(id: $0.id, title: $0.title, desc: $0.desc, createdAt: $0.createdAt, dueDate: $0.dueDate)}
@@ -49,7 +55,7 @@ final class NotesUserDefaultDB: NotesDB {
         do {
             let adaptedTodos = todos.map{ TodoItemAdapter(id: $0.id, title: $0.title, desc: $0.desc, createdAt: $0.createdAt, dueDate: $0.dueDate)}
             let encoded = try encoder.encode(adaptedTodos)
-            defaults.set(encoded, forKey: "TodoList")
+            defaults.set(encoded, forKey: key)
             defaults.synchronize()
         } catch {
 #if DEBUG
