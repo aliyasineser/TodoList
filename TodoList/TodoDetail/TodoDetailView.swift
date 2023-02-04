@@ -20,20 +20,13 @@ struct TodoDetailView<ViewModel>: View where ViewModel: TodoDetailViewModel {
             TextField("Todo", text: $viewModel.title)
             TextField("Description", text: $viewModel.description)
             DatePicker("Due Date", selection: $viewModel.dueDate)
-            Text("Last Change: \(viewModel.item.createdAt, formatter: dateFormatter)")
+            Text("Last Change: \(viewModel.item.createdAt.formatted(date: .abbreviated, time: .shortened))")
         }
         .onAppear(perform: viewModel.onAppear)
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-private let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .short
-    return formatter
-}()
 
 struct TodoDetailView_Previews: PreviewProvider {
     static var previews: some View {

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 final class NotesUserDefaultDB: NotesDB {
-    @Published var todos: [TodoItem] = []
+    var todos: [TodoItem] = []
 
     private let defaults = UserDefaults.standard
     private let key = "TodoList_FullList"
@@ -20,8 +20,8 @@ final class NotesUserDefaultDB: NotesDB {
 
     private init() { /* Do Not Implement */ }
 
-    func fetchData() -> Published<[TodoItem]>.Publisher {
-        guard let fetchedData = defaults.data(forKey: key) else { return $todos }
+    func fetchData() -> [TodoItem] {
+        guard let fetchedData = defaults.data(forKey: key) else { return todos }
 
         if let fetchedTodos = try? decoder.decode([TodoItemAdapter].self, from: fetchedData) {
             todos = fetchedTodos.map{ TodoItem(id: $0.id, title: $0.title, desc: $0.desc, createdAt: $0.createdAt, dueDate: $0.dueDate)}
@@ -29,7 +29,7 @@ final class NotesUserDefaultDB: NotesDB {
             updateDefaults()
         }
 
-        return $todos
+        return todos
     }
 
     func addData(title: String, description: String?, dueDate: Date?) {

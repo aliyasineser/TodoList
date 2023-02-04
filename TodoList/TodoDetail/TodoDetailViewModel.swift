@@ -36,13 +36,10 @@ final class TodoDetailViewModelImpl: TodoDetailViewModel {
         self.title = item.title
         if let desc = item.desc { self.description = desc }
         if let dueDate = item.dueDate { self.dueDate = dueDate }
-
-        onAppear()
     }
 
     func onAppear() {
         subscribeFields()
-        _ = db.fetchData()
     }
 
     private func subscribeFields() {

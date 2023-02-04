@@ -10,7 +10,7 @@ import SwiftUI
 
 final class NotesFirestoreDB: NotesDB {
 
-    @Published var todos = [TodoItem]() // Reference to our Model
+    var todos: [TodoItem] = [TodoItem]() // Reference to our Model
     private var databaseReference = Firestore.firestore().collection(Constants.Firestore.notes.rawValue) // reference to our Firestore's collection
     
     // function to post data
@@ -23,7 +23,7 @@ final class NotesFirestoreDB: NotesDB {
     }
 
     // function to read data
-    func fetchData() -> Published<[TodoItem]>.Publisher {
+    func fetchData() -> [TodoItem] {
         databaseReference.addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
@@ -34,7 +34,7 @@ final class NotesFirestoreDB: NotesDB {
                 return try? queryDocumentSnapshot.data(as: TodoItem.self)
             }.sorted {$0.createdAt > $1.createdAt}
         }
-        return $todos
+        return todos
     }
 
     // function to update data

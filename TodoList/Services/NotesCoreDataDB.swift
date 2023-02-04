@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 final class NotesCoreDataDB: NotesDB {
-    @Published var todos: [TodoItem] = []
+    var todos: [TodoItem] = []
 
     let viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext
 
@@ -17,7 +17,7 @@ final class NotesCoreDataDB: NotesDB {
 
     private init() { /* Do Not Implement */ }
 
-    func fetchData() -> Published<[TodoItem]>.Publisher {
+    func fetchData() -> [TodoItem] {
 
         let request = TodoItemCD.fetchRequest()
         do {
@@ -27,10 +27,10 @@ final class NotesCoreDataDB: NotesDB {
                 return TodoItem(id: id, title: title, desc: $0.desc, createdAt: createdAt, dueDate: $0.dueDate)
             }
         } catch {
-            fatalError("Failed to delete favorite movies: \(error)")
+            fatalError("Failed to delete note: \(error)")
 
         }
-        return $todos
+        return todos
     }
 
     func addData(title: String, description: String?, dueDate: Date?) {
@@ -47,9 +47,8 @@ final class NotesCoreDataDB: NotesDB {
     }
 
     func updateData(id: String, item: TodoItem) {
-        let request = TodoItemCD.fetchRequest()
-        request.fetchLimit =  1
-        request.predicate = NSPredicate(format: "id == %d", id)
+        let request: NSFetchRequest<TodoItemCD> = TodoItemCD.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as String)
         do {
             let result = try viewContext.fetch(request)
             guard let cdItem = result.first else { return }
@@ -59,7 +58,7 @@ final class NotesCoreDataDB: NotesDB {
             cdItem.createdAt = item.createdAt
             cdItem.dueDate = item.dueDate
         } catch {
-            fatalError("Failed to check if favorite serie present: \(error)")
+            fatalError("Failed to check if note present: \(error)")
         }
         saveContext()
     }
@@ -75,7 +74,7 @@ final class NotesCoreDataDB: NotesDB {
                 guard let cdItem = result.first else { return }
                 viewContext.delete(cdItem)
             } catch {
-                fatalError("Failed to check if favorite serie present: \(error)")
+                fatalError("Failed to check if note present: \(error)")
             }
         }
 

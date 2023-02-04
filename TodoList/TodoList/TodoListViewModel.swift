@@ -12,6 +12,7 @@ import Combine
 protocol TodoListViewModel: ObservableObject {
     var todos: [TodoItem] { get set }
 
+    func onAppear()
     func fetchData()
     func addData(title: String, description: String?, dueDate: Date?)
     func updateData(id: String, item: TodoItem)
@@ -27,32 +28,33 @@ final class TodoListViewModelImpl: TodoListViewModel{
         self.db = db
     }
 
-    private var cancellables = Set<AnyCancellable>()
-
     // function to post data
     func addData(title: String, description: String?, dueDate: Date?) {
         db.addData(title: title, description: description, dueDate: dueDate)
     }
 
+    func onAppear() {
+        fetchData()
+    }
+
     // function to read data
     func fetchData() {
-        db.fetchData()
-            .sink { updatedTodoList in
-                DispatchQueue.main.async {
-                    self.todos = updatedTodoList
-                }
-            }
-            .store(in: &cancellables)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.todos = self.db.fetchData()
+        }
     }
 
     // function to update data
     func updateData(id: String, item: TodoItem) {
         db.updateData(id: id, item: item)
+        fetchData()
     }
 
     // function to delete data
     func deleteData(at indexSet: IndexSet) {
         db.deleteData(at: indexSet)
+        fetchData()
     }
 
 }
