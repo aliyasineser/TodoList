@@ -13,9 +13,7 @@ final class NotesCoreDataDB: NotesDB {
 
     let viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext
 
-    public static let shared = NotesCoreDataDB()
-
-    private init() { /* Do Not Implement */ }
+    init() { /* Do Not Implement */ }
 
     func fetchData() -> [TodoItem] {
 

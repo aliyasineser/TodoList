@@ -16,9 +16,7 @@ final class NotesUserDefaultDB: NotesDB {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
 
-    public static let shared = NotesUserDefaultDB()
-
-    private init() { /* Do Not Implement */ }
+    init() { /* Do Not Implement */ }
 
     func fetchData() -> [TodoItem] {
         guard let fetchedData = defaults.data(forKey: key) else { return todos }

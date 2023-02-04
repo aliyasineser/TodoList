@@ -23,6 +23,7 @@ struct TodoDetailView<ViewModel>: View where ViewModel: TodoDetailViewModel {
             Text("Last Change: \(viewModel.item.createdAt.formatted(date: .abbreviated, time: .shortened))")
         }
         .onAppear(perform: viewModel.onAppear)
+        .onDisappear(perform: viewModel.onDisappear)
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
     }

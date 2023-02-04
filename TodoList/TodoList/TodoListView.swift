@@ -28,6 +28,7 @@ struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
             .onDelete(perform: viewModel.deleteData)
         }
         .onAppear(perform: viewModel.onAppear)
+        .onDisappear(perform: viewModel.onDisappear)
         .navigationDestination(for: TodoItem.self) { item in
             TodoDetailView(
                 viewModel: TodoDetailViewModelImpl(

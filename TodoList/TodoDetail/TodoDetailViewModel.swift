@@ -11,6 +11,7 @@ import Combine
 protocol TodoDetailViewModel: ObservableObject {
 
     func onAppear()
+    func onDisappear()
 
     var item: TodoItem { get }
     var title: String { get set }
@@ -42,6 +43,18 @@ final class TodoDetailViewModelImpl: TodoDetailViewModel {
         subscribeFields()
     }
 
+    func onDisappear() {
+        self.updateItem(
+            item: TodoItem(
+                id: self.item.id,
+                title: title,
+                desc: description,
+                createdAt: self.item.createdAt,
+                dueDate: dueDate
+            )
+        )
+    }
+
     private func subscribeFields() {
         Publishers.CombineLatest3($title, $description, $dueDate)
             .dropFirst(3)
@@ -52,7 +65,7 @@ final class TodoDetailViewModelImpl: TodoDetailViewModel {
                     id: self.item.id,
                     title: title,
                     desc: description,
-                    createdAt: self.item.createdAt, // ignored
+                    createdAt: self.item.createdAt,
                     dueDate: dueDate
                 )
                 self.updateItem(

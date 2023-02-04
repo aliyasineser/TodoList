@@ -13,6 +13,8 @@ protocol TodoListViewModel: ObservableObject {
     var todos: [TodoItem] { get set }
 
     func onAppear()
+    func onDisappear()
+    
     func fetchData()
     func addData(title: String, description: String?, dueDate: Date?)
     func updateData(id: String, item: TodoItem)
@@ -35,6 +37,10 @@ final class TodoListViewModelImpl: TodoListViewModel{
 
     func onAppear() {
         fetchData()
+    }
+
+    func onDisappear() {
+
     }
 
     // function to read data
