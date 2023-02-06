@@ -19,6 +19,7 @@ protocol TodoListViewModel: ObservableObject {
     func addData(title: String, description: String?, dueDate: Date?)
     func updateData(id: String, item: TodoItem)
     func deleteData(at indexSet: IndexSet)
+    func deleteData(item: TodoItem)
 }
 
 final class TodoListViewModelImpl: TodoListViewModel{
@@ -33,6 +34,7 @@ final class TodoListViewModelImpl: TodoListViewModel{
     // function to post data
     func addData(title: String, description: String?, dueDate: Date?) {
         db.addData(title: title, description: description, dueDate: dueDate)
+        fetchData()
     }
 
     func onAppear() {
@@ -63,4 +65,8 @@ final class TodoListViewModelImpl: TodoListViewModel{
         fetchData()
     }
 
+    func deleteData(item: TodoItem) {
+        guard let index = todos.firstIndex(of: item) else { return }
+        deleteData(at: IndexSet(integer: index))
+    }
 }

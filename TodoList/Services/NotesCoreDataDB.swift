@@ -66,11 +66,12 @@ final class NotesCoreDataDB: NotesDB {
             let request = TodoItemCD.fetchRequest()
             request.fetchLimit =  1
             guard let id: String = todos[index].id else { return }
-            request.predicate = NSPredicate(format: "id == %d", id)
+        request.predicate = NSPredicate(format: "id == %@", id as String)
             do {
                 let result = try viewContext.fetch(request)
                 guard let cdItem = result.first else { return }
                 viewContext.delete(cdItem)
+                todos.remove(at: index)
             } catch {
                 fatalError("Failed to check if note present: \(error)")
             }

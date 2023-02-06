@@ -20,10 +20,17 @@ struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
             ForEach(
                 viewModel.todos
             ) { item in
-                NavigationLink(item.title, value: item)
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .foregroundColor(.primary)
+                NavigationLink(
+                    value: item,
+                    label: {
+                        TodoItemView(title: item.title) {
+                            viewModel.deleteData(item: item)
+                        }
+                    }
+                )
+                .font(.headline)
+                .fontWeight(.regular)
+                .foregroundColor(.primary)
             }
             .onDelete(perform: viewModel.deleteData)
         }
@@ -40,10 +47,26 @@ struct TodoListView<ViewModel>: View where ViewModel: TodoListViewModel {
     }
 }
 
+fileprivate struct TodoItemView: View {
+    var title: String
+    var onComplete: () -> Void
+
+    var body: some View {
+        HStack {
+            Image(systemName: "circle")
+                .transition(.slide)
+                .onTapGesture(perform: onComplete)
+            Text(title)
+        }
+    }
+}
+
 struct TodoListView_Previews: PreviewProvider {
     static var previews: some View {
         TodoListView(
-            viewModel: TodoListViewModelImpl(db: NotesDatabaseFactory().create())
+            viewModel: TodoListViewModelImpl(
+                db: NotesDatabaseFactory().create()
+            )
         )
     }
 }
